@@ -1,6 +1,4 @@
-# Pixie - AI Chat Application
-
-Pixie is a modern, open-source AI chat application that provides a seamless conversational experience. Built with Next.js and powered by advanced language models, Pixie offers an intuitive interface for natural conversations with AI.
+![banner](https://codemeapixel.dev/Pixie.png)
 
 ## Features
 
