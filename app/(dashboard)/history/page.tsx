@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
-import { Download, Trash2, ChevronDown, ChevronUp } from "lucide-react"
+import { Download, Trash2, ChevronDown, ChevronUp, User, Bot } from "lucide-react"
 import { useEffect, useState } from "react"
 import { ChatHistoryItem, clearChatHistory, deleteChatFromHistory, getChatHistory } from "@/lib/chat-history"
 import { useToast } from "@/hooks/use-toast"
@@ -47,15 +47,15 @@ export default function HistoryPage() {
   }
 
   const handleDownloadChat = (chat: ChatHistoryItem) => {
-    const content = chat.messages.map(msg => 
+    const content = chat.messages.map(msg =>
       `${msg.role === 'user' ? 'You' : 'Assistant'}: ${msg.content}`
     ).join('\n\n')
-    
+
     const blob = new Blob([content], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `chat-${chat.date}-${chat.time}.txt`
+    a.download = `chat-${chat.id}.txt`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -82,7 +82,7 @@ export default function HistoryPage() {
         </p>
       </div>
 
-      <Card>
+      <Card className="glass">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -91,8 +91,8 @@ export default function HistoryPage() {
                 View your previous chats
               </CardDescription>
             </div>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               onClick={handleClearHistory}
             >
@@ -102,26 +102,29 @@ export default function HistoryPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <ScrollArea className="h-[600px]">
+          <ScrollArea className="h-[600px] custom-scrollbar">
             <div className="space-y-4">
               {history.map((chat) => (
-                <Card key={chat.id} className="overflow-hidden">
+                <Card key={chat.id} className="overflow-hidden glass">
                   <div className="p-4">
                     <div className="flex items-start justify-between">
                       <div className="space-y-2">
                         <div>
-                          <h3 className="font-semibold">Conversation</h3>
+                          <h3 className="font-semibold flex items-center">
+                            <User className="mr-2 h-4 w-4" />
+                            Conversation
+                          </h3>
                           <p className="text-muted-foreground">
                             {chat.messages.length} messages
                           </p>
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          {chat.date} at {chat.time}
+                          {/* {chat.createdAt} */}
                         </p>
                       </div>
                       <div className="flex gap-2">
-                        <Button 
-                          variant="ghost" 
+                        <Button
+                          variant="ghost"
                           size="icon"
                           onClick={() => handleDownloadChat(chat)}
                         >
@@ -150,16 +153,21 @@ export default function HistoryPage() {
                     {expandedItems.has(chat.id) && (
                       <div className="mt-4 space-y-4">
                         {chat.messages.map((message, index) => (
-                          <div 
-                            key={index} 
+                          <div
+                            key={index}
                             className={cn(
-                              "p-3 rounded-lg",
-                              message.role === "user" 
-                                ? "bg-muted" 
-                                : "bg-primary/10"
+                              "message-bubble p-3 rounded-lg",
+                              message.role === "user"
+                                ? "user"
+                                : "assistant"
                             )}
                           >
-                            <p className="text-sm font-medium mb-1">
+                            <p className="text-sm font-medium mb-1 flex items-center">
+                              {message.role === "user" ? (
+                                <User className="mr-2 h-4 w-4" />
+                              ) : (
+                                <Bot className="mr-2 h-4 w-4" />
+                              )}
                               {message.role === "user" ? "You" : "Assistant"}
                             </p>
                             <p className="text-sm">
@@ -178,4 +186,4 @@ export default function HistoryPage() {
       </Card>
     </div>
   )
-} 
+}

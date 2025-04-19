@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { format } from "date-fns"
 import { toast } from "@/components/ui/use-toast"
-import { Trash2, Download } from "lucide-react"
+import { Trash2, Download, User, Bot } from "lucide-react"
 
 export default function SavedChatsPage() {
   const [savedMessages, setSavedMessages] = useState<ChatMessage[]>([])
@@ -49,7 +49,7 @@ export default function SavedChatsPage() {
   return (
     <div className="container mx-auto py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-light tracking-tight">Saved Messages</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Saved Messages</h1>
         {savedMessages.length > 0 && (
           <Button
             variant="outline"
@@ -69,16 +69,21 @@ export default function SavedChatsPage() {
           </p>
         </div>
       ) : (
-        <ScrollArea className="h-[calc(100vh-12rem)]">
+        <ScrollArea className="h-[calc(100vh-12rem)] custom-scrollbar">
           <div className="space-y-4 pr-4">
             {savedMessages.map((message) => (
               <div
                 key={message.id}
-                className="group relative rounded-lg border border-border/10 bg-background/80 p-4 shadow-sm backdrop-blur-sm"
+                className={`group relative rounded-lg border border-border/10 bg-background/80 p-4 shadow-sm backdrop-blur-sm message-bubble ${message.role}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center gap-2">
+                      {message.role === "user" ? (
+                        <User className="h-6 w-6" />
+                      ) : (
+                        <Bot className="h-6 w-6" />
+                      )}
                       <span className="text-sm font-medium text-muted-foreground">
                         {message.role === "user" ? "You" : "Assistant"}
                       </span>
@@ -116,4 +121,4 @@ export default function SavedChatsPage() {
       )}
     </div>
   )
-} 
+}
