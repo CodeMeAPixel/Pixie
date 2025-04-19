@@ -1,0 +1,320 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    
+    --muted: 210 40% 93.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    
+    --accent: 210 40% 90.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222.2 84% 7.9%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222.2 84% 7.9%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --accent: 217.2 32.6% 25.5%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+
+  /* Forest theme */
+  .forest {
+    --background: 120 40% 5%;
+    --foreground: 120 25% 95%;
+    
+    --card: 120 30% 8%;
+    --card-foreground: 120 25% 95%;
+    
+    --popover: 120 30% 8%;
+    --popover-foreground: 120 25% 95%;
+    
+    --primary: 130 70% 45%;
+    --primary-foreground: 120 5% 10%;
+    
+    --secondary: 130 30% 15%;
+    --secondary-foreground: 120 25% 95%;
+    
+    --muted: 130 20% 13%;
+    --muted-foreground: 120 10% 70%;
+    
+    --accent: 130 50% 25%;
+    --accent-foreground: 120 25% 95%;
+    
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 120 25% 95%;
+    
+    --border: 130 25% 20%;
+    --input: 130 25% 20%;
+    --ring: 130 70% 45%;
+    
+    background-image: url('/images/forest-bg.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+  }
+  
+  .forest::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 20, 0, 0.8), rgba(0, 15, 5, 0.6));
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Ocean theme */
+  .ocean {
+    --background: 200 80% 5%;
+    --foreground: 200 30% 95%;
+    
+    --card: 200 70% 10%;
+    --card-foreground: 200 30% 95%;
+    
+    --popover: 200 70% 10%;
+    --popover-foreground: 200 30% 95%;
+    
+    --primary: 195 90% 55%;
+    --primary-foreground: 200 80% 5%;
+    
+    --secondary: 200 50% 20%;
+    --secondary-foreground: 200 30% 95%;
+    
+    --muted: 200 40% 15%;
+    --muted-foreground: 200 30% 75%;
+    
+    --accent: 190 60% 35%;
+    --accent-foreground: 200 30% 95%;
+    
+    --destructive: 350 80% 55%;
+    --destructive-foreground: 200 30% 95%;
+    
+    --border: 200 50% 25%;
+    --input: 200 50% 25%;
+    --ring: 195 90% 55%;
+    
+    background-image: url('/images/ocean-bg.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+  }
+  
+  .ocean::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 10, 25, 0.8), rgba(0, 15, 35, 0.6));
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Sunset theme */
+  .sunset {
+    --background: 20 60% 5%;
+    --foreground: 40 40% 95%;
+    
+    --card: 20 50% 10%;
+    --card-foreground: 40 40% 95%;
+    
+    --popover: 20 50% 10%;
+    --popover-foreground: 40 40% 95%;
+    
+    --primary: 25 100% 60%;
+    --primary-foreground: 20 60% 5%;
+    
+    --secondary: 30 40% 20%;
+    --secondary-foreground: 40 40% 95%;
+    
+    --muted: 25 35% 15%;
+    --muted-foreground: 30 30% 70%;
+    
+    --accent: 15 70% 40%;
+    --accent-foreground: 40 40% 95%;
+    
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 40 40% 95%;
+    
+    --border: 25 50% 25%;
+    --input: 25 50% 25%;
+    --ring: 25 100% 60%;
+    
+    background-image: url('/images/sunset-bg.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+  }
+  
+  .sunset::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(25, 5, 0, 0.8), rgba(35, 10, 5, 0.6));
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  * {
+    @apply border-[hsl(var(--border))];
+  }
+  body {
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Glass effect cards */
+  .glass {
+    @apply backdrop-blur-md bg-opacity-20 border border-opacity-30;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .glass {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .forest .glass, .ocean .glass, .sunset .glass {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Modern message bubbles */
+  .message-bubble {
+    @apply relative p-4 rounded-xl transition-all;
+  }
+
+  .message-bubble.user {
+    @apply bg-primary text-primary-foreground ml-4 mr-12 sm:ml-12 sm:mr-24;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  .message-bubble.assistant {
+    @apply bg-opacity-25 mr-4 ml-12 sm:mr-12 sm:ml-24 glass;
+    border-bottom-left-radius: 0.25rem;
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-muted/50 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/30;
+  }
+}
+
+@layer utilities {
+  /* Gradient animations */
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 15s ease infinite;
+  }
+  
+  .animate-gradient-y {
+    background-size: 200% 200%;
+    animation: gradient-y 15s ease infinite;
+  }
+
+  @keyframes gradient-x {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes gradient-y {
+    0% {
+      background-position: 50% 0%;
+    }
+    50% {
+      background-position: 50% 100%;
+    }
+    100% {
+      background-position: 50% 0%;
+    }
+  }
+}
