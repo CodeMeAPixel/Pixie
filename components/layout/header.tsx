@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { MessageSquareText, Sparkles, Menu, X, Github } from "lucide-react";
 import Link from "next/link";
@@ -14,12 +16,15 @@ export function Header({ className, isSidebarOpen, onMenuClick }: HeaderProps) {
   const isMobile = useIsMobile();
 
   return (
-    <header className={cn(
-      "sticky top-0 z-50 backdrop-blur-md", 
-      "bg-background/80 border-b border-border/20",
-      className
-    )}>
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6 lg:px-8">
+    <header
+      className={cn(
+        "sticky top-0 z-50 backdrop-blur-md",
+        "bg-background/80 border-b border-border/20",
+        className
+      )}
+    >
+      <div className="flex w-full h-16 items-center px-4 md:px-6 lg:px-8">
+        {/* Left side */}
         <div className="flex items-center gap-4">
           {isMobile && (
             <Button
@@ -35,8 +40,8 @@ export function Header({ className, isSidebarOpen, onMenuClick }: HeaderProps) {
               )}
             </Button>
           )}
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="flex items-center gap-3 transition-opacity hover:opacity-80"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/20">
@@ -49,7 +54,8 @@ export function Header({ className, isSidebarOpen, onMenuClick }: HeaderProps) {
           </Link>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Right side */}
+        <div className="ml-auto flex items-center gap-2">
           <Link
             href="https://github.com/codemeapixel/pixie"
             target="_blank"
