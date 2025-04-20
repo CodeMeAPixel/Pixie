@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils"
 import { useChat } from "ai/react"
 import { 
-  ArrowUpCircle, 
+  ArrowUpIcon, 
   Loader2, 
   User, 
   Bot, 
@@ -127,7 +127,6 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
       e.preventDefault()
       setIsThinking(true)
       handleSubmit(e as unknown as React.FormEvent)
-      setShowSuggestions(false)
     }
   }
 
@@ -235,19 +234,8 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
                   </h2>
                 </div>
                 <p className="text-muted-foreground max-w-md mx-auto text-base">
-                  Initialize conversation!!
+                  Start a conversation by typing your message below. I'm here to help with any questions you might have.
                 </p>
-                <div className="pt-4 flex gap-2 flex-wrap justify-center">
-                  {suggestions.map((suggestion, i) => (
-                    <button
-                      key={i}
-                      onClick={() => selectSuggestion(suggestion)}
-                      className="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-md text-sm text-primary transition-all"
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
               </div>
             </motion.div>
           )}
@@ -453,97 +441,38 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
         className="fixed inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background via-background/95 to-transparent p-4 backdrop-blur-sm md:p-6"
       >
         <div className="mx-auto max-w-3xl">
-          <div className="relative">
-            <div className="flex items-end gap-2 rounded-xl border border-primary/30 bg-background/80 p-3 shadow-lg backdrop-blur-md relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5">
-                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                  {[...Array(12)].map((_, i) => (
-                    <line 
-                      key={i}
-                      x1={`${i * 8}%`}
-                      y1="0"
-                      x2={`${i * 8}%`}
-                      y2="100%"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      className="text-primary"
-                      strokeDasharray="1 10"
-                    />
-                  ))}
-                </svg>
-              </div>
-            
-              <div className="relative w-full">
-                <AutoResizeTextarea
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Enter conversation..."
-                  className="min-h-10 w-full resize-none bg-transparent p-3 text-sm focus-visible:outline-none text-foreground"
-                  maxRows={5}
-                />
-                
-                {/* Suggestions dropdown */}
-                {showSuggestions && input.length > 0 && (
-                  <div className="absolute bottom-full left-0 mb-2 w-full bg-background/95 border border-primary/30 rounded-lg shadow-lg z-50 backdrop-blur-md overflow-hidden">
-                    {suggestions
-                      .filter(s => s.toLowerCase().includes(input.toLowerCase()))
-                      .map((suggestion, i) => (
-                        <div
-                          key={i}
-                          onClick={() => selectSuggestion(suggestion)}
-                          className="px-4 py-2 hover:bg-primary/10 cursor-pointer text-sm border-b border-primary/10 last:border-b-0 text-foreground"
-                        >
-                          {suggestion}
-                        </div>
-                      ))
-                    }
-                    {!suggestions.some(s => s.toLowerCase().includes(input.toLowerCase())) && (
-                      <div className="px-4 py-2 text-sm text-muted-foreground">
-                        No matching suggestions
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-              
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button 
-                    type="submit" 
-                    size="icon" 
-                    disabled={isLoading || input.trim().length === 0}
-                    className={cn(
-                      "h-10 w-10 shrink-0 rounded-lg transition-all relative overflow-hidden",
-                      input.trim().length === 0 
-                        ? "opacity-50 bg-background border border-primary/30" 
-                        : "bg-primary hover:bg-primary/90 shadow-lg border border-primary",
-                      isLoading && "pointer-events-none"
-                    )}
-                  >
-                    {isLoading ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    ) : (
-                      <>
-                        <div className="absolute inset-0 bg-primary/20 animate-pulse opacity-50"></div>
-                        <Zap className="h-5 w-5" />
-                      </>
-                    )}
-                    <span className="sr-only">Send</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Send message</TooltipContent>
-              </Tooltip>
-            </div>
-            
-            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-0.5 w-1/4 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-            
-            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
-              <div className="px-2 py-0.5 bg-background text-primary text-xs border border-primary/30 rounded-sm flex items-center gap-1">
-                <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></div>
-                {isLoading ? "PROCESSING" : "READY"}
-              </div>
-            </div>
+          <div className="flex items-end gap-2 rounded-2xl border border-border/10 bg-background/80 p-3 shadow-lg backdrop-blur-sm">
+            <AutoResizeTextarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Type your message..."
+              className="min-h-10 w-full resize-none bg-transparent p-3 text-sm focus-visible:outline-none"
+              maxRows={5}
+            />
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  type="submit" 
+                  size="icon" 
+                  disabled={isLoading || input.trim().length === 0}
+                  className={cn(
+                    "h-9 w-9 shrink-0 rounded-full transition-all",
+                    input.trim().length === 0 
+                      ? "opacity-70" 
+                      : "bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 shadow-lg shadow-primary/10"
+                  )}
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <ArrowUpIcon className="h-4 w-4" />
+                  )}
+                  <span className="sr-only">Send</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Send message</TooltipContent>
+            </Tooltip>
           </div>
         </div>
       </form>
