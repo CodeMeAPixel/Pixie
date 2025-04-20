@@ -5,6 +5,7 @@ import { MessageSquareText, Sparkles, Menu, X, Github } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useEffect } from 'react';
 
 interface HeaderProps {
   className?: string;
@@ -14,6 +15,12 @@ interface HeaderProps {
 
 export function Header({ className, isSidebarOpen, onMenuClick }: HeaderProps) {
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (isMobile && isSidebarOpen) {
+      onMenuClick(); // Close the sidebar if the screen is mobile and it's open
+    }
+  }, [isMobile, isSidebarOpen, onMenuClick]);
 
   return (
     <header

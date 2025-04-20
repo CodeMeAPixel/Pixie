@@ -128,9 +128,6 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
       setIsThinking(true)
       handleSubmit(e as unknown as React.FormEvent)
       setShowSuggestions(false)
-    } else if (e.key === "Tab") {
-      e.preventDefault()
-      setShowSuggestions(true)
     }
   }
 
@@ -238,7 +235,7 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
                   </h2>
                 </div>
                 <p className="text-muted-foreground max-w-md mx-auto text-base">
-                  Initialize conversation! Type or press Tab to see suggestions.
+                  Initialize conversation!!
                 </p>
                 <div className="pt-4 flex gap-2 flex-wrap justify-center">
                   {suggestions.map((suggestion, i) => (
@@ -481,7 +478,7 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Enter command... (Press Tab for suggestions)"
+                  placeholder="Enter conversation..."
                   className="min-h-10 w-full resize-none bg-transparent p-3 text-sm focus-visible:outline-none text-foreground"
                   maxRows={5}
                 />
@@ -546,11 +543,6 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"div">) {
                 <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></div>
                 {isLoading ? "PROCESSING" : "READY"}
               </div>
-            </div>
-            
-            {/* Helper text for Tab key */}
-            <div className="absolute -top-8 right-0 px-2 py-1 bg-background/80 text-primary/70 text-xs border border-primary/20 rounded-sm">
-              Press <kbd className="px-1.5 py-0.5 bg-primary/10 border border-primary/30 rounded text-primary mx-1">Tab</kbd> for suggestions
             </div>
           </div>
         </div>
