@@ -1,5 +1,8 @@
 {
   "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "WillLuke.nextjs.addTypesOnSave": true,
+  "WillLuke.nextjs.hasPrompted": true,
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
@@ -10,8 +13,50 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "ahooks",
+    "appcues",
+    "BLOGPOST",
+    "Chauhan",
+    "clsx",
+    "Cobe",
+    "Comeau",
+    "CordX",
+    "eslintcache",
+    "frontmatter",
+    "Gajjar",
+    "gnored",
+    "headlessui",
+    "KARRY",
+    "Knowuser",
+    "mapbox",
+    "Mixpanel",
+    "networkidle",
+    "nextui",
+    "Nuxt",
+    "opengraph",
+    "Parag",
+    "qout",
+    "raxter",
+    "rehype",
+    "Saleshandy",
+    "semibold",
+    "tailwindcss",
+    "Tawk",
+    "Trustpilot",
+    "typecheck",
+    "unist",
+    "useportal",
+    "usequerystate",
+    "Userback",
+    "ZUMTHOR"
+  ],
   "eslint.workingDirectories": [
-    { "pattern": "app/*" },
-    { "pattern": "packages/*" }
+    {
+      "pattern": "app/*"
+    },
+    {
+      "pattern": "packages/*"
+    }
   ]
 }
