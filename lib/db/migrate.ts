@@ -1,11 +1,16 @@
 import { config } from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+config({ path: path.resolve(__dirname, '../../.env.local') });
+config({ path: path.resolve(__dirname, '../../.env') });
+
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
-
-config({
-  path: '.env.local',
-});
 
 const runMigrate = async () => {
   if (!process.env.POSTGRES_URL) {

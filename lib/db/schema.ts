@@ -15,6 +15,11 @@ export const user = pgTable('User', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   email: varchar('email', { length: 64 }).notNull(),
   password: varchar('password', { length: 64 }),
+  isAdmin: boolean('isAdmin').notNull().default(false),
+  isPremium: boolean('isPremium').notNull().default(false),
+  isBeta: boolean('isBeta').notNull().default(false),
+  isBanned: boolean('isBanned').notNull().default(false),
+  profilePictureUrl: text('profilePictureUrl'),
 });
 
 export type User = InferSelectModel<typeof user>;

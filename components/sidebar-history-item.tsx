@@ -19,6 +19,7 @@ import {
   CheckCircleFillIcon,
   GlobeIcon,
   LockIcon,
+  MessageIcon,
   MoreHorizontalIcon,
   ShareIcon,
   TrashIcon,
@@ -45,17 +46,19 @@ const PureChatItem = ({
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={isActive}>
-        <Link href={`/chat/${chat.id}`} onClick={() => setOpenMobile(false)}>
-          <span>{chat.title}</span>
+        <Link
+          href={`/chat/${chat.id}`}
+          onClick={() => setOpenMobile(false)}
+          className="group flex items-center gap-3 transition-colors"
+        >
+          <MessageIcon className="shrink-0 text-muted-foreground group-hover:text-primary" />
+          <span className="truncate">{chat.title}</span>
         </Link>
       </SidebarMenuButton>
 
       <DropdownMenu modal={true}>
         <DropdownMenuTrigger asChild>
-          <SidebarMenuAction
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground mr-0.5"
-            showOnHover={!isActive}
-          >
+          <SidebarMenuAction className="opacity-0 group-hover/menu-item:opacity-100 transition-opacity">
             <MoreHorizontalIcon />
             <span className="sr-only">More</span>
           </SidebarMenuAction>

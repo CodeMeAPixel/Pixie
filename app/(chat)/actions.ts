@@ -10,8 +10,12 @@ import {
 } from '@/lib/db/queries';
 import { VisibilityType } from '@/components/visibility-selector';
 import { myProvider } from '@/lib/ai/providers';
+import { chatModels } from '@/lib/ai/models';
 
 export async function saveChatModelAsCookie(model: string) {
+  if (!chatModels.some(m => m.id === model)) {
+    throw new Error('Invalid model selected');
+  }
   const cookieStore = await cookies();
   cookieStore.set('chat-model', model);
 }
@@ -22,7 +26,7 @@ export async function generateTitleFromUserMessage({
   message: Message;
 }) {
   const { text: title } = await generateText({
-    model: myProvider.languageModel('title-model'),
+    model: myProvider.languageModel('gpt-4.1-nano'),
     system: `\n
     - you will generate a short title based on the first message a user begins a conversation with
     - ensure it is not more than 80 characters long

@@ -21,10 +21,10 @@ const themes = [
   { label: 'Ocean', value: 'ocean' },
   { label: 'Sunset', value: 'sunset' },
   { label: 'Rose', value: 'rose' },
+  { label: 'Indigo', value: 't3' },
   { label: 'Rosé Pine', value: 'rosepine' },
   { label: 'GitHub', value: 'github' },
   { label: 'Nord', value: 'nord' },
-  { label: 'T3', value: 't3' },
   { label: 'System', value: 'system' },
 ];
 

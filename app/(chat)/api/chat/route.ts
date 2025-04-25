@@ -26,6 +26,7 @@ import { getWeather } from '@/lib/ai/tools/get-weather';
 import { isProductionEnvironment } from '@/lib/constants';
 import { myProvider } from '@/lib/ai/providers';
 import { Session } from 'next-auth';
+import { chatModels, canAccessModel } from '@/lib/ai/models';
 
 // Create an anonymous session type that matches Session interface
 type AnonymousSession = Session & {
@@ -41,26 +42,37 @@ export const maxDuration = 60;
 
 export async function POST(request: Request) {
   try {
-    const {
-      id,
-      messages,
-      selectedChatModel,
-    }: {
-      id: string;
-      messages: Array<UIMessage>;
-      selectedChatModel: string;
-    } = await request.json();
+    const { id, messages, selectedChatModel } = await request.json();
 
     const authSession = await auth();
 
-    // Create an anonymous session that matches the Session interface
+    // Validate selected model exists
+    const selectedModel = chatModels.find(m => m.id === selectedChatModel);
+    if (!selectedModel) {
+      return new Response('Invalid model selected', { status: 400 });
+    }
+
+    // Check model access with proper user properties
+    const canAccess = canAccessModel(selectedModel, authSession?.user ? {
+      id: authSession.user.id,
+      isPremium: authSession.user.isPremium ?? false,
+      isAdmin: authSession.user.isAdmin ?? false,
+      isBeta: authSession.user.isBeta ?? false,
+      isBanned: authSession.user.isBanned ?? false
+    } : undefined);
+
+    if (!canAccess) {
+      return new Response('You do not have access to this model', { status: 403 });
+    }
+
+    // Create session for anonymous users
     const session: Session = authSession || {
       user: {
         id: 'anonymous',
         name: 'Anonymous User',
         email: 'anonymous@user.com',
       },
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours from now
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
     };
 
     const userMessage = getMostRecentUserMessage(messages);
@@ -103,7 +115,7 @@ export async function POST(request: Request) {
     return createDataStreamResponse({
       execute: (dataStream) => {
         const result = streamText({
-          model: myProvider.languageModel(selectedChatModel),
+          model: myProvider.languageModel(selectedModel.id),
           system: systemPrompt({ selectedChatModel }),
           messages,
           maxSteps: 5,
@@ -176,11 +188,13 @@ export async function POST(request: Request) {
           sendReasoning: true,
         });
       },
-      onError: () => {
-        return 'Oops, an error occurred!';
+      onError: (error) => {
+        console.error('Stream error:', error);
+        return 'An error occurred while processing your request. Please try again.';
       },
     });
   } catch (error) {
+    console.error('API error:', error);
     return new Response('An error occurred while processing your request!', {
       status: 500,
     });
