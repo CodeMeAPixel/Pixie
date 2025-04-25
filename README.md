@@ -31,9 +31,23 @@ npm install
 yarn install
 ```
 
-3. Create a `.env` file in the root directory and add your GROQ API key:
+3. Create a `.env` file in the root directory with the following variables:
 ```env
-GROQ_API_KEY=your_api_key_here
+# Authentication
+AUTH_SECRET=your_auth_secret_here
+
+# AI API Keys
+GOOGLE_GENERATIVE_AI_API_KEY=your_google_ai_key
+ANTHROPIC_API_KEY=your_anthropic_key
+OPENAI_API_KEY=your_openai_key
+GROQ_API_KEY=your_groq_key
+TAVILY_API_KEY=your_tavily_key
+
+# Storage
+BLOB_READ_WRITE_TOKEN=your_blob_token
+
+# Database
+POSTGRES_URL=your_postgres_url
 ```
 
 4. Run the development server:
@@ -69,7 +83,9 @@ yarn dev
 - **UI Components**: shadcn/ui
 - **Styling**: Tailwind CSS
 - **State Management**: React Hooks
-- **AI Integration**: GROQ API
+- **AI Integration**: Multi-provider (OpenAI, Google AI, Anthropic, GROQ)
+- **Database**: PostgreSQL
+- **Storage**: Vercel Blob Storage
 - **Markdown Support**: react-markdown
 - **Code Highlighting**: react-syntax-highlighter
 
