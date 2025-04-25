@@ -17,12 +17,12 @@ function PureChatHeader({
   chatId,
   selectedModelId,
   selectedVisibilityType,
-  isReadonly,
+  isReadonly = false,
 }: {
-  chatId: string;
-  selectedModelId: string;
-  selectedVisibilityType: VisibilityType;
-  isReadonly: boolean;
+  chatId?: string;
+  selectedModelId?: string;
+  selectedVisibilityType?: VisibilityType;
+  isReadonly?: boolean;
 }) {
   const router = useRouter();
   const { open } = useSidebar();
@@ -52,14 +52,14 @@ function PureChatHeader({
         </Tooltip>
       )}
 
-      {!isReadonly && (
+      {selectedModelId && !isReadonly && (
         <ModelSelector
           selectedModelId={selectedModelId}
           className="order-1 md:order-2"
         />
       )}
 
-      {!isReadonly && (
+      {chatId && selectedVisibilityType && !isReadonly && (
         <VisibilitySelector
           chatId={chatId}
           selectedVisibilityType={selectedVisibilityType}

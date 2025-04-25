@@ -8,25 +8,24 @@ import { DataStreamHandler } from '@/components/data-stream-handler';
 import { DEFAULT_CHAT_MODEL } from '@/lib/ai/models';
 import { DBMessage } from '@/lib/db/schema';
 import { Attachment, UIMessage } from 'ai';
+import ChatNotFoundPage from '../not-found';
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const { id } = params;
   const chat = await getChatById({ id });
 
-  if (!chat) {
-    notFound();
-  }
+  if (!chat) notFound();
 
   const session = await auth();
 
   if (chat.visibility === 'private') {
     if (!session || !session.user) {
-      return notFound();
+      return ChatNotFoundPage();
     }
 
     if (session.user.id !== chat.userId) {
-      return notFound();
+      return ChatNotFoundPage();
     }
   }
 

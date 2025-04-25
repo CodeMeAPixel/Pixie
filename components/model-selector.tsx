@@ -33,13 +33,13 @@ interface ModelSelectorProps {
 const ProviderIcon = ({ provider }: { provider: string }) => {
   switch (provider) {
     case 'OpenAI':
-      return <Icons.OpenAI className="h-4 w-4 text-primary" />;
+      return <Icons.OpenAI size="4" />;
     case 'Google':
-      return <Icons.Google className="h-4 w-4" />;
+      return <Icons.Google size="4"  />;
     case 'Groq':
-      return <Icons.Bolt className="h-4 w-4 text-primary" />;
+      return <Icons.Bolt size="4"  />;
     default:
-      return <Icons.OpenAI className="h-4 w-4 text-muted-foreground opacity-50" />;
+      return <Icons.OpenAI size="4"  />;
   }
 };
 
@@ -95,7 +95,7 @@ export function ModelSelector({
     if (model.access === 'premium') {
       return (
         <Badge variant="premium" className="h-5 gap-1 px-1.5 text-xs">
-          <Icons.Sparkles className="h-3 w-3" />
+          <Icons.Sparkles size="4"  />
           Pro
         </Badge>
       );
@@ -103,7 +103,7 @@ export function ModelSelector({
     if (model.access === 'beta') {
       return (
         <Badge variant="secondary" className="h-5 gap-1 px-1.5 text-xs">
-          <Icons.Beaker className="h-3 w-3" />
+          <Icons.Beaker size="4"  />
           Beta
         </Badge>
       );
@@ -111,7 +111,7 @@ export function ModelSelector({
     if (model.access === 'admin') {
       return (
         <Badge variant="destructive" className="h-5 gap-1 px-1.5 text-xs">
-          <Icons.Shield className="h-3 w-3" />
+          <Icons.Shield size="4"  />
           Admin
         </Badge>
       );

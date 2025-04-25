@@ -157,11 +157,15 @@ const PurePreviewMessage = ({
                     <div
                       key={toolCallId}
                       className={cx({
-                        skeleton: ['getWeather'].includes(toolName),
+                        skeleton: ['getWeather', 'web_search'].includes(toolName),
                       })}
                     >
                       {toolName === 'getWeather' ? (
                         <Weather />
+                      ) : toolName === 'web_search' ? (
+                        <div className="flex flex-col gap-4 text-muted-foreground">
+                          <SearchingMessage />
+                        </div>
                       ) : toolName === 'createDocument' ? (
                         <DocumentPreview isReadonly={isReadonly} args={args} />
                       ) : toolName === 'updateDocument' ? (
@@ -205,12 +209,22 @@ const PurePreviewMessage = ({
                           result={result}
                           isReadonly={isReadonly}
                         />
+                      ) : toolName === 'web_search' && result._type === 'web_search_results' ? (
+                        null // Don't display web search results
                       ) : (
                         <pre>{JSON.stringify(result, null, 2)}</pre>
                       )}
                     </div>
                   );
                 }
+              }
+
+              if (type === 'gathering') {
+                return (
+                  <div key={key} className="flex flex-col gap-4 text-muted-foreground">
+                    <SearchingMessage />
+                  </div>
+                );
               }
             })}
 
@@ -241,6 +255,39 @@ export const PreviewMessage = memo(
     return true;
   },
 );
+
+export const SearchingMessage = () => {
+  const role = 'assistant';
+
+  return (
+    <motion.div
+      data-testid="message-assistant-searching"
+      className="w-full mx-auto max-w-3xl px-4 group/message"
+      initial={{ y: 5, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, transition: { delay: 1 } }}
+      data-role={role}
+    >
+      <div
+        className={cx(
+          'flex gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl',
+          {
+            'group-data-[role=user]/message:bg-muted': true,
+          },
+        )}
+      >
+        <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
+          <SparklesIcon size={14} />
+        </div>
+
+        <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-4 text-muted-foreground">
+            Gathering information from the web...
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 export const ThinkingMessage = () => {
   const role = 'assistant';

@@ -27,18 +27,14 @@ import { isProductionEnvironment } from '@/lib/constants';
 import { myProvider } from '@/lib/ai/providers';
 import { Session } from 'next-auth';
 import { chatModels, canAccessModel } from '@/lib/ai/models';
-
-// Create an anonymous session type that matches Session interface
-type AnonymousSession = Session & {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
-  expires: string;
-};
+import { z } from 'zod';
+import { webSearch } from '@/lib/ai/tools/web-search';
+import { codeInterpreter } from '@/lib/ai/tools/code-interpreter';
+import { randomUUID } from 'crypto';
 
 export const maxDuration = 60;
+
+const generateMessageUUID = () => randomUUID();
 
 export async function POST(request: Request) {
   try {
@@ -53,7 +49,7 @@ export async function POST(request: Request) {
     }
 
     // Check model access with proper user properties
-    const canAccess = canAccessModel(selectedModel, authSession?.user ? {
+    const canAccess = canAccessModel(selectedModel, authSession?.user?.id ? {
       id: authSession.user.id,
       isPremium: authSession.user.isPremium ?? false,
       isAdmin: authSession.user.isAdmin ?? false,
@@ -101,7 +97,7 @@ export async function POST(request: Request) {
         messages: [
           {
             chatId: id,
-            id: userMessage.id,
+            id: generateMessageUUID(), // Use proper UUID format
             role: 'user',
             parts: userMessage.parts,
             attachments: userMessage.experimental_attachments ?? [],
@@ -113,46 +109,33 @@ export async function POST(request: Request) {
 
     // Rest of the stream handling code remains the same
     return createDataStreamResponse({
-      execute: (dataStream) => {
+      execute: async (dataStream) => {
         const result = streamText({
           model: myProvider.languageModel(selectedModel.id),
-          system: systemPrompt({ selectedChatModel }),
+          system: await systemPrompt(request),
           messages,
           maxSteps: 5,
-          experimental_activeTools:
-            selectedChatModel === 'chat-model-reasoning'
-              ? []
-              : [
-                  'getWeather',
-                  'createDocument',
-                  'updateDocument',
-                  'requestSuggestions',
-                ],
-          experimental_transform: smoothStream({ chunking: 'word' }),
-          experimental_generateMessageId: generateUUID,
+          experimental_activeTools: [
+            'getWeather',
+            'createDocument',
+            'updateDocument',
+            'requestSuggestions',
+            'web_search',
+            'codeInterpreter',
+          ],
           tools: {
             getWeather,
             createDocument: createDocument({ session, dataStream }),
             updateDocument: updateDocument({ session, dataStream }),
-            requestSuggestions: requestSuggestions({
-              session,
-              dataStream,
-            }),
+            requestSuggestions: requestSuggestions({ session, dataStream }),
+            web_search: webSearch({ dataStream }),
+            codeInterpreter: codeInterpreter(),
           },
           onFinish: async ({ response }) => {
             // Only save assistant messages for authenticated users
             if (authSession?.user?.id) {
               try {
-                const assistantId = getTrailingMessageId({
-                  messages: response.messages.filter(
-                    (message) => message.role === 'assistant',
-                  ),
-                });
-
-                if (!assistantId) {
-                  throw new Error('No assistant message found!');
-                }
-
+                const assistantId = generateMessageUUID(); // Use proper UUID for assistant message
                 const [, assistantMessage] = appendResponseMessages({
                   messages: [userMessage],
                   responseMessages: response.messages,

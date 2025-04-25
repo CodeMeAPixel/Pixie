@@ -37,7 +37,7 @@ export function ThemeSelect() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent bg-background data-[state=open]:text-sidebar-accent-foreground h-10">
-              <PaletteIcon className="h-4 w-4" />
+              <PaletteIcon size="4" />
               <span className="flex-1 text-left">Theme</span>
               <span className="ml-auto text-xs text-muted-foreground">
                 {themes.find(t => t.value === theme)?.label}

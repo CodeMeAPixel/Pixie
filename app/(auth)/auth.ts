@@ -1,5 +1,5 @@
 import { compare } from 'bcrypt-ts';
-import NextAuth, { type User, type Session } from 'next-auth';
+import NextAuth, { type Session, DefaultUser } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 import { getUser } from '@/lib/db/queries';
@@ -7,8 +7,32 @@ import { getUser } from '@/lib/db/queries';
 import { authConfig } from './auth.config';
 import { DUMMY_PASSWORD } from '@/lib/constants';
 
+// Extended user interface
+interface ExtendedUser extends DefaultUser {
+  id: string;
+  username?: string;
+  name?: string;
+  bio?: string;
+  location?: string;
+  website?: string;
+  profilePictureUrl?: string;
+  isAdmin?: boolean;
+  isBeta?: boolean;
+  isPremium?: boolean;
+  isBanned?: boolean;
+  github?: string;
+  twitter?: string;
+  linkedin?: string;
+  theme?: string;
+  language?: string;
+  timezone?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  lastLoginAt?: Date;
+}
+
 interface ExtendedSession extends Session {
-  user: User;
+  user: ExtendedUser;
 }
 
 export const {
@@ -40,30 +64,40 @@ export const {
 
         if (!passwordsMatch) return null;
 
-        return user as any;
+        const { password: _, ...userWithoutPassword } = user;
+        return userWithoutPassword;
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        token = {
+          ...token,
+          ...user,
+          createdAt: user.createdAt ? new Date(user.createdAt) : undefined,
+          updatedAt: user.updatedAt ? new Date(user.updatedAt) : undefined,
+          lastLoginAt: user.lastLoginAt ? new Date(user.lastLoginAt) : undefined
+        };
       }
-
       return token;
     },
-    async session({
-      session,
-      token,
-    }: {
-      session: ExtendedSession;
-      token: any;
-    }) {
+    async session({ session, token }: { session: ExtendedSession; token: any }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user = {
+          ...session.user,
+          ...token,
+          // Remove any sensitive data
+          password: undefined
+        };
       }
-
       return session;
     },
   },
 });
+
+// Export the extended types
+declare module 'next-auth' {
+  interface User extends ExtendedUser {}
+  interface Session extends ExtendedSession {}
+}

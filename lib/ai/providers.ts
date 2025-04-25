@@ -17,17 +17,7 @@ import {
   titleModel,
 } from './models.test';
 
-export const myProvider = isTestEnvironment
-  ? customProvider({
-      languageModels: {
-        // Test models
-        'chat-model': chatModel,
-        'chat-model-reasoning': reasoningModel,
-        'title-model': titleModel,
-        'artifact-model': artifactModel,
-      },
-    })
-  : customProvider({
+export const myProvider = customProvider({
       languageModels: {
         'gpt-3.5-turbo': openai('gpt-3.5-turbo'),
         'gpt-4-turbo': openai('gpt-4-turbo'),

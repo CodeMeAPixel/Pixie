@@ -4,6 +4,10 @@ export interface User {
   name?: string;
   hashedPassword: string;
   isVerified?: boolean;
+  isPremium?: boolean;
+  isAdmin?: boolean;
+  isBeta?: boolean;
+  isBanned?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -41,3 +45,17 @@ export interface Usage {
   cost: number;
   createdAt: Date;
 }
+
+export type ExtendedUser = User & {
+  username?: string;
+  bio?: string;
+  location?: string;
+  website?: string;
+  github?: string;
+  twitter?: string;
+  linkedin?: string;
+  theme?: string;
+  language?: string;
+  timezone?: string;
+  lastLoginAt?: Date;
+};

@@ -13,13 +13,31 @@ import {
 
 export const user = pgTable('User', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
-  email: varchar('email', { length: 64 }).notNull(),
+  email: varchar('email', { length: 64 }).notNull().unique(),
+  username: varchar('username', { length: 32 }).unique(),
+  name: varchar('name', { length: 64 }),
+  bio: text('bio'),
+  location: varchar('location', { length: 100 }),
+  website: varchar('website', { length: 255 }),
   password: varchar('password', { length: 64 }),
+  profilePictureUrl: text('profilePictureUrl'),
+  
   isAdmin: boolean('isAdmin').notNull().default(false),
   isPremium: boolean('isPremium').notNull().default(false),
   isBeta: boolean('isBeta').notNull().default(false),
   isBanned: boolean('isBanned').notNull().default(false),
-  profilePictureUrl: text('profilePictureUrl'),
+
+  github: varchar('github', { length: 100 }),
+  twitter: varchar('twitter', { length: 100 }),
+  linkedin: varchar('linkedin', { length: 100 }),
+
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+  updatedAt: timestamp('updatedAt'),
+  lastLoginAt: timestamp('lastLoginAt'),
+  
+  theme: varchar('theme', { length: 32 }).default('system'),
+  language: varchar('language', { length: 10 }).default('en'),
+  timezone: varchar('timezone', { length: 50 }),
 });
 
 export type User = InferSelectModel<typeof user>;
