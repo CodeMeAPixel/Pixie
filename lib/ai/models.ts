@@ -64,7 +64,6 @@ export const chatModels: ChatModel[] = [
     category: 'advanced',
     access: 'premium',
     enabled: false,
-    beta: true
   },
   {
     id: 'gpt-4.1-mini',
@@ -77,7 +76,6 @@ export const chatModels: ChatModel[] = [
     category: 'balanced',
     access: 'premium',
     enabled: false,
-    beta: true
   },
   {
     id: 'gpt-4.1-nano',
@@ -90,7 +88,6 @@ export const chatModels: ChatModel[] = [
     category: 'fast',
     access: 'free',
     enabled: true,
-    beta: true
   },
 
   // Google Models
@@ -105,7 +102,6 @@ export const chatModels: ChatModel[] = [
     category: 'fast',
     access: 'free',
     enabled: true,
-    beta: true
   },
   {
     id: 'gemini-flash-1.5-pro',
@@ -118,7 +114,6 @@ export const chatModels: ChatModel[] = [
     category: 'advanced',
     access: 'premium',
     enabled: false,
-    beta: true
   },
   {
     id: 'gemma-it-3-27b',
@@ -177,7 +172,7 @@ export const chatModels: ChatModel[] = [
     provider: 'Groq',
     maxTokens: 32768,
     features: ['chat', 'streaming'],
-    capability: 'balanced',
+    capability: 'basic',
     category: 'balanced',
     access: 'premium',
     enabled: false
@@ -195,7 +190,6 @@ export const chatModels: ChatModel[] = [
     capability: 'reasoning',
     access: 'premium',
     enabled: true,
-    beta: true
   },
   {
     id: 'gpt-03-mini',
@@ -208,7 +202,6 @@ export const chatModels: ChatModel[] = [
     capability: 'reasoning',
     access: 'premium',
     enabled: true,
-    beta: true
   },
   {
     id: 'gpt-04-mini',
@@ -221,7 +214,6 @@ export const chatModels: ChatModel[] = [
     capability: 'reasoning',
     access: 'premium',
     enabled: true,
-    beta: true
   },
   {
     id: 'deepseek-r1-distill',
@@ -234,7 +226,6 @@ export const chatModels: ChatModel[] = [
     capability: 'reasoning',
     access: 'premium',
     enabled: true,
-    beta: true
   }
 ];
 

@@ -3,7 +3,6 @@ import { ChevronUp, LogIn } from 'lucide-react';
 import Image from 'next/image';
 import type { User } from 'next-auth';
 import { signIn, signOut } from 'next-auth/react';
-import { useTheme } from 'next-themes';
 
 import {
   DropdownMenu,
@@ -12,25 +11,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-
-const themes = [
-  { label: 'Light', value: 'light' },
-  { label: 'Dark', value: 'dark' },
-  { label: 'Forest', value: 'forest' },
-  { label: 'Ocean', value: 'ocean' },
-  { label: 'Sunset', value: 'sunset' },
-  { label: 'Rose', value: 'rose' },
-  { label: 'Rosé Pine', value: 'rosepine' },
-  { label: 'GitHub', value: 'github' },
-  { label: 'Nord', value: 'nord' },
-  { label: 'T3', value: 't3' },
-  { label: 'System', value: 'system' },
-];
 
 export function SidebarUserNav({ user }: { user: User | undefined }) {
   if (!user) {
@@ -71,6 +57,17 @@ export function SidebarUserNav({ user }: { user: User | undefined }) {
             side="top"
             className="w-[--radix-popper-anchor-width]" 
           >
+            <DropdownMenuItem asChild>
+              <Link href="/chat/profile" className="w-full block">
+                Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/chat/stats" className="w-full block">
+                Stats
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <button
                 type="button"

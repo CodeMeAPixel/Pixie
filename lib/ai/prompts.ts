@@ -36,16 +36,8 @@ This is a guide for using artifacts tools: \`createDocument\` and \`updateDocume
 Do not update document right after creating it. Wait for user feedback or request to update it.
 `;
 
-export const systemPrompt = ({
-  selectedChatModel,
-}: {
-  selectedChatModel: string;
-}) => {
-  if (selectedChatModel === 'chat-model-reasoning') {
-    return regularPrompt;
-  } else {
-    return `${regularPrompt}\n\n${artifactsPrompt}`;
-  }
+export const systemPrompt = () => {
+  return `${regularPrompt}\n\n${artifactsPrompt}\n\n${codePrompt}\n\n${sheetPrompt}`;
 };
 
 export const codePrompt = `
