@@ -59,7 +59,7 @@ export const myProvider = customProvider({
 
         'deepseek-r1-distill': wrapLanguageModel({
           model: groq('deepseek-r1-distill-llama-70b'),
-          moddleware: extractReasoningMiddleware({ tagName: 'think' })
+          middleware: extractReasoningMiddleware({ tagName: 'think' })
         }),
       },
       imageModels: {
