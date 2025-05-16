@@ -19,6 +19,7 @@ import { MessageEditor } from './message-editor';
 import { DocumentPreview } from '../Misc/document-preview';
 import { MessageReasoning } from './message-reasoning';
 import { UseChatHelpers } from '@ai-sdk/react';
+import { MathCard } from '../Maths/maths';
 
 const PurePreviewMessage = ({
   chatId,
@@ -96,6 +97,23 @@ const PurePreviewMessage = ({
 
               if (type === 'text') {
                 if (mode === 'view') {
+                  // Integrate MathCard if part has math data
+                  if (part.math) {
+                    return (
+                      <div key={key} className="flex flex-row gap-2 items-start">
+                        <MathCard
+                          expression={part.math.expression}
+                          result={part.math.result}
+                          steps={part.math.steps}
+                          title={part.math.title}
+                          category={part.math.category}
+                          explanation={part.math.explanation}
+                          relatedFormulas={part.math.relatedFormulas}
+                        />
+                      </div>
+                    );
+                  }
+
                   return (
                     <div key={key} className="flex flex-row gap-2 items-start">
                       {message.role === 'user' && !isReadonly && (

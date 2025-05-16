@@ -591,14 +591,20 @@ export const MoreHorizontalIcon = ({ size = 16 }: { size?: number }) => {
   );
 };
 
-export const MessageIcon = ({ size = 16 }: { size?: number }) => {
+type MessageIconProps = {
+  size?: number;
+  className?: string;
+};
+
+export const MessageIcon = ({ size = 16, className }: MessageIconProps) => {
   return (
     <svg
       height={size}
+      width={size}
       strokeLinejoin="round"
       viewBox="0 0 16 16"
-      width={size}
       style={{ color: 'currentcolor' }}
+      className={className}
     >
       <path
         fillRule="evenodd"
