@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
       {
         hostname: 'avatar.vercel.sh',
       },
+      {
+        hostname: 'ranveersoni.me',
+      },
+      {
+        hostname: 'codemeapixel.dev',
+      },
+      {
+        hostname: 'cordx.ca',
+      },
     ],
   },
 };

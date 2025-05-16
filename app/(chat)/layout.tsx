@@ -1,10 +1,9 @@
 import { cookies } from 'next/headers';
 
-import { AppSidebar } from '@/components/app-sidebar';
+import { AppSidebar } from '@/components/ui/sidebar/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { auth } from '../(auth)/auth';
 import Script from 'next/script';
-import { ChatHeader } from '@/components/chat-header';
 
 export const experimental_ppr = true;
 

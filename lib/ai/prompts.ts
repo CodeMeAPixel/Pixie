@@ -1,4 +1,4 @@
-import { ArtifactKind } from '@/components/artifact';
+import { ArtifactKind } from '@/components/ui/artifacts/artifact';
 import { geolocation } from '@vercel/functions';
 import { webSearchPrompt } from './prompt/webSearch';
 import { artifactsPrompt } from './prompt/artifactRules';
