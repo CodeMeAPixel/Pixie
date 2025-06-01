@@ -1,12 +1,12 @@
-import { Artifact } from '@/components/create-artifact';
+import { Artifact } from '@/components/ui/artifacts/create-artifact';
 import {
   CopyIcon,
   LineChartIcon,
   RedoIcon,
   SparklesIcon,
   UndoIcon,
-} from '@/components/icons';
-import { SpreadsheetEditor } from '@/components/sheet-editor';
+} from '@/components/icons/icons';
+import { SpreadsheetEditor } from '@/components/ui/misc/sheet-editor';
 import { parse, unparse } from 'papaparse';
 import { toast } from 'sonner';
 

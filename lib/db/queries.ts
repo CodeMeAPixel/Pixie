@@ -26,7 +26,7 @@ import {
   type DBMessage,
   type Chat,
 } from './schema';
-import type { ArtifactKind } from '@/components/artifact';
+import type { ArtifactKind } from '@/components/ui/artifacts/artifact';
 import { generateHashedPassword } from './utils';
 
 // Optionally, if not using email/pass login, you can

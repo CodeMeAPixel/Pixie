@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { auth } from '@/app/(auth)/auth';
 import { getChatsByUserId, getMessagesByChatId } from '@/lib/db/queries';
-import { ChatStats } from '@/components/ChatStats';
+import { ChatStats } from '@/components/ai/components/ui/Misc/ChatStats';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 export default async function StatsPage() {
